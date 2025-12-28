@@ -22,6 +22,8 @@
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href={{ route('index')}}
                                 class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Accueil</a>
+                            <a href={{ route('book.index')}}
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">livres</a>
                             <a href={{ route('books')}}
                                 class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Recherche</a>
                             <a href={{ route('about')}}
