@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -22,15 +23,26 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            $image = $request->file('cover');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('covers'), $imageName);
+            $validated['cover'] = $imageName;
+        }
+
+        Book::create($validated);
+
+        return redirect()->route('book.index')->with('success', 'the book was added successfully !');
     }
 
     /**
@@ -62,6 +74,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return redirect()->route('book.index')->with('success', 'the book was deleted successfully !');
     }
 }

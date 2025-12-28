@@ -4,7 +4,7 @@
   <div class="py-24 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <span class="text-blue-600 font-semibold">Tous les livres</span>
+        <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">Ajouter un livre</a>
         <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
           Parcourir les livres
         </h2>
