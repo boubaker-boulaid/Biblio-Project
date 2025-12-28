@@ -24,6 +24,7 @@ class BookFactory extends Factory
             'editeur' => $this->faker->company(),
             'categorie' => $this->faker->randomElement(['Classique', 'Science Fiction','Fantastique', 'Horreur', 'Romance', 'Mystere']),
             'prix' => $this->faker->randomFloat(2, 0, 900),
+            'annee' => $this->faker->date(),
             'auteur' => $this->faker->name(),
             'cover' => 'no_cover.jpg',
 
