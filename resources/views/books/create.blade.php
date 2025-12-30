@@ -5,11 +5,17 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-md">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6">Ajouter un nouveau livre</h2>
+                <h2 class="text-3xl text-center font-bold text-gray-900 mb-6">Ajouter un nouveau livre</h2>
                 
                 @if ($errors->any())
                     <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-md">
                         <p class="text-sm text-red-700 font-bold">Veuillez corriger les erreurs ci-dessous.</p>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-md">
+                        <p class="text-sm text-red-700 font-bold">{{ session('error') }}</p>
                     </div>
                 @endif
 
@@ -98,6 +104,8 @@
                         @enderror
                     </div>
                     <div class="flex justify-center">
+                        <a href="{{route('book.index')}}"
+                            class="text-center px-5">Annuler</a>
                         <button type="submit"
                             class="px-4 w-56 text-2xl text-center h-15 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">Ajouter</button>
                     </div>
