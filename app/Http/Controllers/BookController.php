@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller
 {
@@ -20,9 +20,12 @@ class BookController extends Controller
 
             return view('books.index', compact('books'));
         
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             
-            return redirect()->back()->withInput()->with('error', 'error : ' . $th->getMessage());
+            //Log the error
+            Log::error('error fetching tho books:' .$e->getMessage());
+
+            return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
         
         }
     }
@@ -53,11 +56,17 @@ class BookController extends Controller
 
             Book::create($validated);
 
+            //Log the success
+            Log::info('Book added successfully: ' . $validated['designation']);
+
             return redirect()->route('book.index')->with('success', 'the book was added successfully !');
         } catch (\Exception $e) {
+            
+            //Log the error
+            Log::error('Error adding book: ' . $e->getMessage());
 
             return redirect()->back()->withInput()
-                ->with('error', 'error : ' . $e->getMessage());
+                ->with('error', 'error hapened while adding the book !');
         }
     }
 
@@ -86,6 +95,11 @@ class BookController extends Controller
 
             $validated = $request->validated();
 
+            //delete the old cover before saving the new one 
+            if ($book->cover && file_exists(public_path('covers/' . $book->cover)) && $book->cover !== 'no_cover.jpg') {
+                unlink(public_path('covers/' . $book->cover));
+            }
+
             //checks if a file with name cover was uploaded and the upload went successfully without errors
             if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
                 $image = $request->file('cover');
@@ -94,17 +108,19 @@ class BookController extends Controller
                 $validated['cover'] = $imageName;
             }
 
-            //delete the old cover before saving the new one 
-            if ($book->cover && file_exists(public_path('covers/' . $book->cover)) && $book->cover !== 'no_cover.jpg') {
-                unlink(public_path('covers/' . $book->cover));
-            }
-
             $book->update($validated);
 
-            return redirect()->route('book.index')->with('success', 'the book was updated successfully !');
+            //Log success
+            Log::info('Book updated successfully: '. $validated['designation']);
+
+            return redirect()->route('book.show', $book)->with('success', 'the book was updated successfully !');
+        
         } catch (\Exception $e) {
 
-            return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
+            //Log error 
+            Log::error('error updating the book '. $book->designation .': '. $e->getMessage());
+
+            return redirect()->back()->withInput()->with('error', 'error hapened while updating '. $book->designation);
         }
     }
 
@@ -117,10 +133,16 @@ class BookController extends Controller
 
             $book->delete();
 
+            //Log the success
+            Log::info('Book removed successfully: ' . $book->designation);
+
             return redirect()->route('book.index')->with('success', 'the book was deleted successfully !');
         } catch (\Exception $e) {
+            
+            //Log error
+            Log::error('error removing the book '. $book->designation .': '. $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'error hapened while removing '. $book->designation );
         }
     }
 }
