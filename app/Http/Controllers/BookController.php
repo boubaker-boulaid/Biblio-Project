@@ -7,7 +7,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
+
 
 class BookController extends Controller
 {
