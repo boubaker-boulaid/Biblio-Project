@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -19,14 +21,14 @@ class BookController extends Controller
             $books = Book::latest()->get();
 
             return view('books.index', compact('books'));
-        
+
         } catch (\Exception $e) {
-            
+
             //Log the error
-            Log::error('error fetching tho books:' .$e->getMessage());
+            Log::error('error fetching tho books:' . $e->getMessage());
 
             return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
-        
+
         }
     }
 
@@ -60,13 +62,15 @@ class BookController extends Controller
             Log::info('Book added successfully: ' . $validated['designation']);
 
             return redirect()->route('book.index')->with('success', 'the book was added successfully !');
+
         } catch (\Exception $e) {
-            
+
             //Log the error
             Log::error('Error adding book: ' . $e->getMessage());
 
             return redirect()->back()->withInput()
                 ->with('error', 'error hapened while adding the book !');
+
         }
     }
 
@@ -111,16 +115,15 @@ class BookController extends Controller
             $book->update($validated);
 
             //Log success
-            Log::info('Book updated successfully: '. $validated['designation']);
+            Log::info('Book updated successfully: ' . $validated['designation']);
 
             return redirect()->route('book.show', $book)->with('success', 'the book was updated successfully !');
-        
         } catch (\Exception $e) {
 
             //Log error 
-            Log::error('error updating the book '. $book->designation .': '. $e->getMessage());
+            Log::error('error updating the book ' . $book->designation . ': ' . $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'error hapened while updating '. $book->designation);
+            return redirect()->back()->withInput()->with('error', 'error hapened while updating ' . $book->designation);
         }
     }
 
@@ -133,16 +136,47 @@ class BookController extends Controller
 
             $book->delete();
 
+            //delete the cover image from the covers folder
+            if ($book->cover && file_exists(public_path('covers/' . $book->cover)) && $book->cover !== 'no_cover.jpg') {
+                unlink(public_path('covers/' . $book->cover));
+            }
+
             //Log the success
             Log::info('Book removed successfully: ' . $book->designation);
 
             return redirect()->route('book.index')->with('success', 'the book was deleted successfully !');
-        } catch (\Exception $e) {
-            
-            //Log error
-            Log::error('error removing the book '. $book->designation .': '. $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'error hapened while removing '. $book->designation );
+        } catch (\Exception $e) {
+
+            //Log error
+            Log::error('error removing the book ' . $book->designation . ': ' . $e->getMessage());
+
+            return redirect()->back()->withInput()->with('error', 'error hapened while removing ' . $book->designation);
+        }
+    }
+
+    public function search(SearchRequest $request)
+    {
+        try {
+
+            $validated = $request->validated();
+
+            // search for books that match the search query
+            $books = Book::whereLike('designation', '%' . $validated['search'] . '%')
+                ->orWhereLike('auteur', '%' . $validated['search'] . '%')
+                ->get();
+
+            $search = $validated['search'];
+            
+            return view('books.index', compact('books', 'search'));
+
+        } catch (\Exception $e) {
+
+            //Log error
+            Log::error('error searching for books: ' . $e->getMessage());
+
+            return redirect()->back()->withInput()
+                ->with('error', 'error hapened while searching for ');
         }
     }
 }

@@ -9,10 +9,24 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">Ajouter un livre</a>
-                <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Parcourir les livres
-                </h2>
+
+                {{-- Search Results --}}
+                @if (isset($search))
+                    <h2 class="text-2xl font-bold my-3 text-gray-900">
+                        Search Results for "{{ $search }}"
+                    </h2>
+
+                    <p class="text-gray-600 my-3">Found {{ $books->count() }} Books</p>
+
+                    <a href="{{ route('book.index') }} " class="text-blue-600 my-3 hover:underline">View all books</a>
+                @else
+                {{-- All Books --}}
+                    <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">Ajouter un livre</a>
+                    <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                        Parcourir les livres
+                    </h2>
+                @endif
+
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

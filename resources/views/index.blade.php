@@ -11,15 +11,28 @@
                     que vous voulez</h1>
                 <p class="mt-6 text-xl text-gray-600">Parcourez notre collection de plus d'un million de livres.</p>
 
+                {{-- Error Message --}}
+                @if (session('error'))
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-md">
+                        <p class="text-sm text-red-700 font-bold">{{ session('error') }}</p>
+                    </div>
+                @endif
+
                 <!-- Search Box -->
                 <div class="mt-12 max-w-3xl mx-auto">
-                    <form action="#"
+                    <form action="{{ route('search') }}" method="GET"
                         class="sm:flex items-center bg-white rounded-lg p-2 border border-gray-300 shadow-lg">
+                        
                         <div class="min-w-0 flex-1">
-                            <input type="text" placeholder="Titre du livre ou mot clé"
+                            <input type="text" name="search" placeholder="Titre du livre ou auteur"
                                 class="w-full bg-transparent border-0 text-gray-800 placeholder-gray-500 focus:ring-0 sm:text-sm px-4 py-3">
+                            
                         </div>
-                        <div class="mt-2 sm:mt-0 sm:ml-2">
+                        {{-- search feild error --}}
+                        @error('search')
+                                <span class="text-red-500 text-sm mx-2">{{ $message }}</span>
+                        @enderror
+                        {{-- <div class="mt-2 sm:mt-0 sm:ml-2">
                             <select name="select"
                                 class="w-full sm:w-auto bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-3">
                                 <option value="">Toute la bibliothèque</option>
@@ -27,7 +40,7 @@
                                 <option value="">E-Books</option>
                                 <option value="">Livres audibles</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="mt-2 sm:mt-0 sm:ml-2">
                             <button type="submit"
                                 class="w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Trouver</button>
