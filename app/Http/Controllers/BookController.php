@@ -20,12 +20,14 @@ class BookController extends Controller
 
             $books = Book::latest()->get();
 
+            Log::info('Books fetched successfully');
+
             return view('books.index', compact('books'));
 
         } catch (\Exception $e) {
 
             //Log the error
-            Log::error('error fetching tho books:' . $e->getMessage());
+            Log::error('error fetching the books:' . $e->getMessage());
 
             return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
 
