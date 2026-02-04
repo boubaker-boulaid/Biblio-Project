@@ -7,19 +7,21 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Request;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
 
-            $books = Book::latest()->get();
+            $query = Book::query();
 
+
+            $books = $query->latest()->paginate(8);
             Log::info('Books fetched successfully');
 
             return view('books.index', compact('books'));

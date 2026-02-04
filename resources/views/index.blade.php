@@ -20,7 +20,7 @@
 
                 <!-- Search Box -->
                 <div class="mt-12 max-w-3xl mx-auto">
-                    <form action="{{ route('search') }}" method="GET"
+                    <form action="{{ route('book.index') }}" method="GET"
                         class="sm:flex items-center bg-white rounded-lg p-2 border border-gray-300 shadow-lg">
                         
                         <div class="min-w-0 flex-1">

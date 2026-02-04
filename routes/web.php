@@ -31,10 +31,6 @@ Route::get('/search', [BookController::class, 'search'])->name('search');
 
 
 // breeze routes 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
