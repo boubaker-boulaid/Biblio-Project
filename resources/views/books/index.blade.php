@@ -11,9 +11,9 @@
                 @endif
 
                 {{-- Search Results --}}
-                @if (isset($search))
+                @if (request('search'))
                     <h2 class="text-2xl font-bold my-3 text-gray-900">
-                        Search Results for "{{ $search }}"
+                        Search Results for "{{ request('search') }}"
                     </h2>
 
                     <p class="text-gray-600 my-3">Found {{ $books->count() }} Books</p>
@@ -99,11 +99,11 @@
                     </div>
                 @endforeach
             </div>
-            {{-- @if ($books->hasPages())
-                <div class="">
+            @if ($books->hasPages())
+                <div class="flex align-center justify-center mt-10">
                     {{ $books->links() }}
                 </div>
-            @endif --}}
+            @endif
         </div>
     </div>
 @endsection

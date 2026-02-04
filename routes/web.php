@@ -27,7 +27,6 @@ Route::get('/books/details', function () {
     return view('books.details');
 })->name('details');
 
-Route::get('/search', [BookController::class, 'search'])->name('search'); 
 
 
 // breeze routes 

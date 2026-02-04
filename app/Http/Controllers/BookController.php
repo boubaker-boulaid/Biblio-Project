@@ -6,8 +6,8 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
 
 class BookController extends Controller
 {
@@ -18,21 +18,23 @@ class BookController extends Controller
     {
         try {
 
-            $query = Book::query();
-
-
-            $books = $query->latest()->paginate(8);
+            $books = Book::query()
+                                ->when($request->search, function ($query, $search) {
+                                    $query->where('designation', 'like', '%'.$search.'%')
+                                        ->orWhere('auteur', 'like', '%'.$search.'%');
+                                })
+                                ->latest()
+                                ->paginate(8)->withQueryString();
+                                
             Log::info('Books fetched successfully');
 
             return view('books.index', compact('books'));
-
         } catch (\Exception $e) {
 
             //Log the error
             Log::error('error fetching the books:' . $e->getMessage());
 
             return redirect()->back()->withInput()->with('error', 'error : ' . $e->getMessage());
-
         }
     }
 
@@ -66,7 +68,6 @@ class BookController extends Controller
             Log::info('Book added successfully: ' . $validated['designation']);
 
             return redirect()->route('book.index')->with('success', 'the book was added successfully !');
-
         } catch (\Exception $e) {
 
             //Log the error
@@ -74,7 +75,6 @@ class BookController extends Controller
 
             return redirect()->back()->withInput()
                 ->with('error', 'error hapened while adding the book !');
-
         }
     }
 
@@ -149,38 +149,12 @@ class BookController extends Controller
             Log::info('Book removed successfully: ' . $book->designation);
 
             return redirect()->route('book.index')->with('success', 'the book was deleted successfully !');
-
         } catch (\Exception $e) {
 
             //Log error
             Log::error('error removing the book ' . $book->designation . ': ' . $e->getMessage());
 
             return redirect()->back()->withInput()->with('error', 'error hapened while removing ' . $book->designation);
-        }
-    }
-
-    public function search(SearchRequest $request)
-    {
-        try {
-
-            $validated = $request->validated();
-
-            // search for books that match the search query
-            $books = Book::whereLike('designation', '%' . $validated['search'] . '%')
-                ->orWhereLike('auteur', '%' . $validated['search'] . '%')
-                ->get();
-
-            $search = $validated['search'];
-            
-            return view('books.index', compact('books', 'search'));
-
-        } catch (\Exception $e) {
-
-            //Log error
-            Log::error('error searching for books: ' . $e->getMessage());
-
-            return redirect()->back()->withInput()
-                ->with('error', 'error hapened while searching for ');
         }
     }
 }
