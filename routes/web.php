@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 // original routes
 Route::resource('book',BookController::class);
 
-Route::get('/books', function () {
-    return view('books');
-})->name('books');
+
+
+Route::get('/books', [BookController::class, 'searchPage'])->name('books');
 
 Route::get('/about', function () {
     return view('about');
