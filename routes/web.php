@@ -10,6 +10,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::put('book/{book}', [BookController::class, 'update'])->name('book.update');
     // Route::delete('book/{book}', [BookController::class, 'destroy'])->name('book.destroy');
     Route::resource('book', BookController::class)->except(['index', 'show']);
+    Route::get('/sendBook/{book}', [BookController::class, 'mailBookToUser'])->name('sendBook');
 
 });
 
