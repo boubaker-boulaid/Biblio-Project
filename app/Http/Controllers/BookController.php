@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Mail\SendBook;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class BookController extends Controller
 {
@@ -175,5 +178,14 @@ class BookController extends Controller
         $booksCount = $query->count();
         $books = $query->paginate(4)->withQueryString();
         return view('books',compact('books','booksCount'));
+    }
+
+    public function mailBookToUser (Book $book)
+    {
+        $user = Auth::user();
+
+        Mail::to($user)->send(new SendBook($book));
+
+        return redirect()->back()->with('success', 'Email sent successfully!');
     }
 }
