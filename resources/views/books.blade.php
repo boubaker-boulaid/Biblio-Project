@@ -89,6 +89,8 @@
                     </div>
                 </aside>
 
+                
+
                 <!-- Right content (Book List) -->
                 @isset($books)
                     <div class="col-span-1 lg:col-span-3">

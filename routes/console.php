@@ -12,3 +12,4 @@ Artisan::command('users:count', function () {
     $count = User::count();
     $this->info("The users count is {$count}");
 })->purpose('display the users count');
+

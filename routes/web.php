@@ -5,9 +5,15 @@ use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 // original routes
-Route::resource('book',BookController::class);
+Route::middleware(['auth'])->group(function () {
+    // Route::post('book', [BookController::class, 'store'])->name('book.store');
+    // Route::put('book/{book}', [BookController::class, 'update'])->name('book.update');
+    // Route::delete('book/{book}', [BookController::class, 'destroy'])->name('book.destroy');
+    Route::resource('book', BookController::class)->except(['index', 'show']);
 
+});
 
+Route::resource('book', BookController::class)->only(['index','show']);
 
 Route::get('/books', [BookController::class, 'searchPage'])->name('books');
 
