@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Mail\SendBook;
@@ -70,14 +69,14 @@ class BookController extends Controller
             //Log the success
             Log::info('Book added successfully: ' . $validated['designation']);
 
-            return redirect()->route('book.index')->with('success', 'the book was added successfully !');
+            return redirect()->route('book.index')->with('success', __('books.added_success'));
         } catch (\Exception $e) {
 
             //Log the error
             Log::error('Error adding book: ' . $e->getMessage());
 
             return redirect()->back()->withInput()
-                ->with('error', 'error hapened while adding the book !');
+                ->with('error', __('books.added_error'));
         }
     }
 
@@ -124,13 +123,13 @@ class BookController extends Controller
             //Log success
             Log::info('Book updated successfully: ' . $validated['designation']);
 
-            return redirect()->route('book.show', $book)->with('success', 'the book was updated successfully !');
+            return redirect()->route('book.show', $book)->with('success', __('books.updated_success'));
         } catch (\Exception $e) {
 
             //Log error 
             Log::error('error updating the book ' . $book->designation . ': ' . $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'error hapened while updating ' . $book->designation);
+            return redirect()->back()->withInput()->with('error', __('books.updated_error'));
         }
     }
 
@@ -151,13 +150,13 @@ class BookController extends Controller
             //Log the success
             Log::info('Book removed successfully: ' . $book->designation);
 
-            return redirect()->route('book.index')->with('success', 'the book was deleted successfully !');
+            return redirect()->route('book.index')->with('success', __('books.deleted_success'));
         } catch (\Exception $e) {
 
             //Log error
             Log::error('error removing the book ' . $book->designation . ': ' . $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'error hapened while removing ' . $book->designation);
+            return redirect()->back()->withInput()->with('error', __('books.deleted_error'));
         }
     }
 
@@ -186,6 +185,6 @@ class BookController extends Controller
 
         Mail::to($user)->send(new SendBook($book));
 
-        return redirect()->back()->with('success', 'Email sent successfully!');
+        return redirect()->back()->with('success', __('books.email_sent'));
     }
 }

@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('titre', 'modifier un livre')
+@section('titre', __('books.edit.title'))
 @section('content')
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-md">
-                <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Modifier {{$book->designation}} </h2>
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">{{ __('books.edit.edit_title', ['designation' => $book->designation]) }}</h2>
                 
                 @if ($errors->any())
                     <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-md">
-                        <p class="text-sm text-red-700 font-bold">Veuillez corriger les erreurs ci-dessous.</p>
+                        <p class="text-sm text-red-700 font-bold">{{ __('books.edit.error_summary') }}</p>
                     </div>
                 @endif
 
@@ -18,7 +18,7 @@
                     @method('PUT')
 
                     <div class="m-4">
-                        <label for="designation">Designation</label>
+                        <label for="designation">{{ __('books.designation') }}</label>
                         <input type="text" id="designation" name="designation"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="auteur">Auteur</label>
+                        <label for="auteur">{{ __('books.author') }}</label>
                         <input type="text" id="auteur" name="auteur"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value="{{old('auteur' , $book->auteur ?? '')}}">
@@ -39,7 +39,7 @@
                     </div>
                     
                     <div class="m-4">
-                        <label for="prix">Prix</label>
+                        <label for="prix">{{ __('books.price') }}</label>
                         <input type="number" id="prix" name="prix"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value="{{old('prix' , $book->prix ?? '')}}">
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="type">Type</label>
+                        <label for="type">{{ __('books.type') }}</label>
                         <input type="text" id="type" name="type"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value="{{old('type' , $book->type ?? '')}}">
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="annee">Annee</label>
+                        <label for="annee">{{ __('books.year') }}</label>
                         <input type="date" id="annee" name="annee"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value="{{old('annee' , $book->annee ?? '')}}">
@@ -70,7 +70,7 @@
 
 
                     <div class="m-4">
-                        <label for="categorie">Categorie</label>
+                        <label for="categorie">{{ __('books.category') }}</label>
                         <input type="text" id="categorie" name="categorie"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value="{{old('categorie', $book->categorie ?? '')}}">
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="description">description</label>
+                        <label for="description">{{ __('books.description') }}</label>
                         <textarea name="description" id="description" cols="30" rows="10"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             {{old('description', $book->description ?? '')}}
@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="cover">Cover</label>
+                        <label for="cover">{{ __('books.cover') }}</label>
                         <input type="file" id="cover" name="cover"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         @error('cover')
@@ -100,9 +100,9 @@
                     </div>
                     <div class="flex justify-center items-center">
                         <a href="{{route('book.index')}}"
-                            class="text-center px-5">Annuler</a>
+                            class="text-center px-5">{{ __('books.edit.cancel') }}</a>
                         <button type="submit"
-                            class="px-4 w-56 text-2xl text-center h-15 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">Modifier</button>
+                            class="px-4 w-56 text-2xl text-center h-15 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">{{ __('books.edit.submit_edit') }}</button>
                     </div>
                 </form>
             </div>

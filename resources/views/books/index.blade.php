@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Acceuil')
+@section('titre', __('books.index.title'))
 @section('content')
     <div class="py-24 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,19 +13,19 @@
                 {{-- Search Results --}}
                 @if (request('search'))
                     <h2 class="text-2xl font-bold my-3 text-gray-900">
-                        Search Results for "{{ request('search') }}"
+                        {{ __('books.index.search_results_for', ['query' => request('search')]) }}
                     </h2>
 
-                    <p class="text-gray-600 my-3">Found {{ $books->count() }} Books</p>
+                    <p class="text-gray-600 my-3">{{ __('books.index.found_books', ['count' => $books->count()]) }}</p>
 
-                    <a href="{{ route('book.index') }} " class="text-blue-600 my-3 hover:underline">View all books</a>
+                    <a href="{{ route('book.index') }} " class="text-blue-600 my-3 hover:underline">{{ __('books.index.view_all') }}</a>
                 @else
                     {{-- All Books --}}
                     @if (Auth::check())
-                        <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">Ajouter un livre</a>
+                        <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">{{ __('books.index.add_book') }}</a>
                     @endif
                     <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                        Parcourir les livres
+                        @lang('books.index.browse')
                     </h2>
                 @endif
 
@@ -63,7 +63,7 @@
                                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
                                     </div>
-                                    <span class="text-xs font-medium">View</span>
+                                    <span class="text-xs font-medium">{{ __('books.index.view') }}</span>
                                 </a>
 
                                 {{-- admin actions  --}}
@@ -78,14 +78,14 @@
                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </div>
-                                        <span class="text-xs font-medium">Edit</span>
+                                        <span class="text-xs font-medium">{{ __('books.index.edit') }}</span>
                                     </a>
 
                                     <form action="{{ route('book.destroy', $book) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this book?')"
+                                            onclick="return confirm('{{ __('books.index.delete_confirm') }}')"
                                             class="group/btn flex flex-col items-center gap-1 text-gray-600 hover:text-red-600 transition"
                                             title="Delete Book">
                                             <div class="p-3 rounded-full bg-red-50 group-hover/btn:bg-red-100 transition">
@@ -95,7 +95,7 @@
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                             </div>
-                                            <span class="text-xs font-medium">Delete</span>
+                                            <span class="text-xs font-medium">{{ __('books.index.delete') }}</span>
                                         </button>
                                     </form>
                                 @endif

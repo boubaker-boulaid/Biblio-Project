@@ -3,23 +3,34 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <div class="shrink-0">
-                        <a href="{{ route('index') }}" class="text-gray-800 font-bold text-xl">Bibliothèque</a>
+                        <a href="{{ route('index') }}" class="text-gray-800 font-bold text-xl">{{ __('layout.brand') }}</a>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="{{ route('index') }}"
-                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Accueil</a>
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">{{ __('layout.nav_home') }}</a>
                             <a href="{{ route('book.index') }}"
-                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Livres</a>
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">{{ __('layout.nav_books') }}</a>
                             <a href="{{ route('books') }}"
-                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Recherche</a>
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">{{ __('layout.nav_search') }}</a>
                             <a href="{{ route('about') }}"
-                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">A
-                                propos</a>
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">{{ __('layout.nav_about') }}</a>
                             <a href="{{ route('contact') }}"
-                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                                class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">{{ __('layout.nav_contact') }}</a>
                         </div>
                     </div>
+                </div>
+
+                <div>
+                    <form method="POST" id="lang-form">
+                        @csrf
+                        <select name="local" onchange="this.form.action=`/language/${this.value}`; this.form.submit();"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <option value="en" {{ session('locale') == 'en' ? 'selected' : '' }}> @lang('layout.lang_en')</option>
+                            <option value="fr" {{ session('locale') == 'fr' ? 'selected' : '' }}> @lang('layout.lang_fr')</option>
+                            <option value="ar" {{ session('locale') == 'ar' ? 'selected' : '' }}> @lang('layout.lang_ar')</option>
+                        </select>
+                    </form>
                 </div>
 
                 <div class="hidden md:block">
@@ -28,9 +39,9 @@
                     @else
                         <div class="ml-4 flex items-center md:ml-6">
                             <a href="{{ route('register') }}"
-                                class="text-gray-600 hover:bg-gray-100 font-medium rounded-md text-sm px-3 py-2">Register</a>
+                                class="text-gray-600 hover:bg-gray-100 font-medium rounded-md text-sm px-3 py-2">{{ __('layout.nav_register') }}</a>
                             <a href="{{ route('login') }}"
-                                class="ml-3 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-md text-sm px-3 py-2">Login</a>
+                                class="ml-3 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-md text-sm px-3 py-2">{{ __('layout.nav_login') }}</a>
                         </div>
                     @endauth
                 </div>

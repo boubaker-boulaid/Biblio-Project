@@ -7,7 +7,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black-900">
-                    hi {{auth()->user()?->name}}
+                    {{ __('layout.nav_dashboard') }}, {{auth()->user()?->name}}
                 </div>
             </div>
         </div>

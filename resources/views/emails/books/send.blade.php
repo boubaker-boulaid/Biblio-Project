@@ -10,8 +10,8 @@
     <div class="max-w-2xl mx-auto my-10 bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-100">
         <!-- Header -->
         <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 p-10 text-center">
-            <h1 class="text-3xl font-extrabold text-white tracking-tight m-0">Biblio Project</h1>
-            <p class="text-indigo-100 mt-2 text-lg font-medium opacity-90">Your Requested Book Details</p>
+            <h1 class="text-3xl font-extrabold text-white tracking-tight m-0">{{ __('email.header_title') }}</h1>
+            <p class="text-indigo-100 mt-2 text-lg font-medium opacity-90">{{ __('email.subtitle') }}</p>
         </div>
 
         <!-- Content -->
@@ -29,32 +29,32 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8 mb-10">
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Category</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.category') }}</span>
                     <span class="text-slate-700 font-medium">{{ $book->categorie }}</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Language</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.language') }}</span>
                     <span class="text-slate-700 font-medium">{{ $book->langue }}</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Publisher</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.publisher') }}</span>
                     <span class="text-slate-700 font-medium">{{ $book->editeur }}</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Type</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.type') }}</span>
                     <span class="text-slate-700 font-medium">{{ $book->type }}</span>
                 </div>
                 @if($book->annee)
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Year</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.year') }}</span>
                     <span class="text-slate-700 font-medium">{{ \Carbon\Carbon::parse($book->annee)->format('Y') }}</span>
                 </div>
                 @endif
                 <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Price</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.price') }}</span>
                     <div>
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                            {{ number_format($book->prix, 2) }} DH
+                            {{ number_format($book->prix, 2) }} {{ __('email.currency') }}
                         </span>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
 
             <!-- Description -->
             <div class="bg-slate-50 rounded-xl p-6 border-l-4 border-indigo-500">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-3">Description</h3>
+                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-3">{{ __('email.description') }}</h3>
                 <p class="text-slate-600 leading-relaxed text-sm">
                     {{ $book->description }}
                 </p>
@@ -72,10 +72,10 @@
         <!-- Footer -->
         <div class="bg-slate-50 border-t border-slate-100 p-8 text-center">
             <p class="text-slate-400 text-xs m-0">
-                &copy; {{ date('Y') }} <span class="font-semibold text-slate-500">Biblio Project</span>. All rights reserved.
+                {!! __('email.footer', ['year' => date('Y')]) !!}
             </p>
             <p class="text-slate-400 text-[10px] mt-2 italic">
-                This is an automated message. Please do not reply directly to this email.
+                {{ __('email.disclaimer') }}
             </p>
         </div>
     </div>

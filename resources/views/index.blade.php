@@ -6,10 +6,8 @@
         <!-- Hero Area Start-->
         <div class="relative bg-gray-100 py-32 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="relative max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Trouver tous les
-                    livres
-                    que vous voulez</h1>
-                <p class="mt-6 text-xl text-gray-600">Parcourez notre collection de plus d'un million de livres.</p>
+                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">{{ __('home.hero_title') }}</h1>
+                <p class="mt-6 text-xl text-gray-600">{{ __('home.hero_subtitle') }}</p>
 
                 {{-- Error Message --}}
                 @if (session('error'))
@@ -24,7 +22,7 @@
                         class="sm:flex items-center bg-white rounded-lg p-2 border border-gray-300 shadow-lg">
                         
                         <div class="min-w-0 flex-1">
-                            <input type="text" name="search" placeholder="Titre du livre ou auteur"
+                            <input type="text" name="search" placeholder="{{ __('home.search_placeholder') }}"
                                 class="w-full bg-transparent border-0 text-gray-800 placeholder-gray-500 focus:ring-0 sm:text-sm px-4 py-3">
                             
                         </div>
@@ -43,7 +41,7 @@
                         </div> --}}
                         <div class="mt-2 sm:mt-0 sm:ml-2">
                             <button type="submit"
-                                class="w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Trouver</button>
+                                class="w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">{{ __('home.search_button') }}</button>
                         </div>
                     </form>
                 </div>
@@ -55,8 +53,8 @@
         <div class="py-24 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <span class="text-blue-600 font-semibold">Nos meilleures catégories</span>
-                    <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">Parcourir les catégories</h2>
+                    <span class="text-blue-600 font-semibold">{{ __('home.categories_label') }}</span>
+                    <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">{{ __('home.categories_heading') }}</h2>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     <!-- Single Category -->
@@ -70,7 +68,7 @@
                                 </path>
                             </svg>
                         </div>
-                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">Informatique</a></h5>
+                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">{{ __('home.category_computer_science') }}</a></h5>
                         <span class="text-gray-500">(653)</span>
                     </div>
                     <div
@@ -83,7 +81,7 @@
                                 </path>
                             </svg>
                         </div>
-                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">Design</a></h5>
+                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">{{ __('home.category_design') }}</a></h5>
                         <span class="text-gray-500">(658)</span>
                     </div>
                     <div
@@ -96,7 +94,7 @@
                                 </path>
                             </svg>
                         </div>
-                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">Marketing</a></h5>
+                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">{{ __('home.category_marketing') }}</a></h5>
                         <span class="text-gray-500">(658)</span>
                     </div>
                     <div
@@ -108,7 +106,7 @@
                                     d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                             </svg>
                         </div>
-                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">Mobile Application</a></h5>
+                        <h5 class="text-lg font-semibold text-gray-900"><a href="#">{{ __('home.category_mobile_app') }}</a></h5>
                         <span class="text-gray-500">(658)</span>
                     </div>
                 </div>
