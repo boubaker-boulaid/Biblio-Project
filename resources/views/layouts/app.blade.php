@@ -7,6 +7,7 @@
     <title>{{ __('layout.site_title') }} - @yield('titre') </title>
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="bg-gray-50 font-sans antialiased">
@@ -22,6 +23,7 @@
     <!-- Footer -->
     @include('partial.footer')
 
+    @livewireScripts
 </body>
 
 </html>
