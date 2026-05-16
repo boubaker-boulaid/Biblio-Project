@@ -85,6 +85,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $book->with('categories');
         return view('books.show', compact('book'));
     }
 

@@ -3,8 +3,6 @@
 
 @section('content')
     <!-- Main Content -->
-
-
     <main class="py-12 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             
@@ -55,7 +53,11 @@
                             <li class="flex justify-between"><span>{{ __('books.show.publisher') }}</span> <span
                                     class="font-medium text-gray-900">{{ $book->editeur }} </span></li>
                             <li class="flex justify-between"><span>{{ __('books.show.category_label') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->categorie }} </span></li>
+                                    class="font-medium text-gray-900"> 
+                                @foreach ($book->categories as $category )
+                                    {{ $category->name }}
+                                @endforeach    
+                            </span></li>
                             <li class="flex justify-between"><span>{{ __('books.show.price_label') }}</span> <span
                                     class="font-medium text-gray-900">{{ $book->prix }} </span></li>
                         </ul>
