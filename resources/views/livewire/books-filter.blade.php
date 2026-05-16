@@ -16,25 +16,14 @@
                         <h5 class="font-semibold text-gray-800 mb-3">{{ __('books.filter_categories') }}</h5>
                         <select name="category" onchange="window.location.href = this.value"
                             class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
-                            <option
-                                value="{{ route('books', array_merge(request()->except('page', 'categorie'), [])) }}">
-                                {{ __('books.filter_all') }}</option>
-                            <option
-                                value="{{ route('books', array_merge(request()->except('page'), ['categorie' => 'Horreur'])) }}"
-                                {{ request('categorie') == 'Horreur' ? 'selected' : '' }}>
-                                {{ __('books.filter_horror') }}</option>
-                            <option
-                                value="{{ route('books', array_merge(request()->except('page'), ['categorie' => 'Mystere'])) }}"
-                                {{ request('categorie') == 'Mystere' ? 'selected' : '' }}>
-                                {{ __('books.filter_mystery') }}</option>
-                            <option
-                                value="{{ route('books', array_merge(request()->except('page'), ['categorie' => 'Fiction'])) }}"
-                                {{ request('categorie') == 'Fiction' ? 'selected' : '' }}>
-                                {{ __('books.filter_fiction') }}</option>
-                            <option
-                                value="{{ route('books', array_merge(request()->except('page'), ['categorie' => 'Action'])) }} "
-                                {{ request('categorie') == 'Action' ? 'selected' : '' }}>
-                                {{ __('books.filter_action') }}</option>
+                            <option value="">
+                                All
+                            </option>
+                            @foreach ($categories as $category)
+                                <option value="">
+                                    {{$category->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -148,7 +137,11 @@
                                             class="text-lg font-semibold text-gray-900 hover:text-blue-600">{{ $book->designation }}
                                         </a>
                                         <ul class="flex flex-wrap gap-x-4 text-sm text-gray-500 mt-1">
-                                            <li>{{ $book->categorie }} </li>
+                                            <li>
+                                                @foreach ($book->categories as $category )
+                                                    {{ $category->name }}
+                                                @endforeach    
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

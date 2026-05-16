@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Book;
+use App\Models\Category;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -32,11 +33,13 @@ class BooksFilter extends Component
             $query->orderBy('prix', 'asc');
         }   
 
-        $books = $query->paginate(4);
+        $books = $query->with('categories:id,name')->paginate(4);
+        $categories = Category::latest()->get();
 
         return view('livewire.books-filter', [
             'books' => $books,
             'booksCount' => $books->total(),
+            'categories' => $categories
         ]);
     }
 }
