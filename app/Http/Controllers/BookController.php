@@ -6,8 +6,10 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Mail\SendBook;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -45,7 +47,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $categories = Category::latest()->get();
+        return view('books.create', compact('categories'));
     }
 
     /**
@@ -53,6 +56,8 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
+        DB::beginTransaction();
+
         try {
 
             $validated = $request->validated();
@@ -64,13 +69,21 @@ class BookController extends Controller
                 $validated['cover'] = $imageName;
             }
 
-            Book::create($validated);
+            
 
+            $book = Book::create($validated);
+            
+            if (!empty($validated['categories'])){
+                $book->categories()->sync($validated['categories']);
+            }
+
+            DB::commit();
             //Log the success
             Log::info('Book added successfully: ' . $validated['designation']);
 
             return redirect()->route('book.index')->with('success', __('books.added_success'));
         } catch (\Exception $e) {
+            DB::rollBack();
 
             //Log the error
             Log::error('Error adding book: ' . $e->getMessage());
@@ -85,7 +98,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book->with('categories');
+        $book->load('categories');
         return view('books.show', compact('book'));
     }
 

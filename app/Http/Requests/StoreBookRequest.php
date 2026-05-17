@@ -31,6 +31,7 @@ class StoreBookRequest extends FormRequest
             'editeur' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'categories' => 'array|exists:categories,id'
         ];
     }
 }
