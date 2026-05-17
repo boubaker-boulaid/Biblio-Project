@@ -21,11 +21,11 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="flex items-center">
                     <form method="POST" id="lang-form">
                         @csrf
                         <select name="local" onchange="this.form.action=`/language/${this.value}`; this.form.submit();"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            class="py-1.5 pl-2 pr-6 rounded border border-gray-300 bg-white text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer hover:bg-gray-50 transition-colors">
                             <option value="en" {{ session('locale') == 'en' ? 'selected' : '' }}> @lang('layout.lang_en')</option>
                             <option value="fr" {{ session('locale') == 'fr' ? 'selected' : '' }}> @lang('layout.lang_fr')</option>
                             <option value="ar" {{ session('locale') == 'ar' ? 'selected' : '' }}> @lang('layout.lang_ar')</option>

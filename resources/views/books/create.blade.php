@@ -75,9 +75,9 @@
 
 
                     <div class="m-4">
-                        <label for="categories">{{ __('books.category') }}</label>
+                        <label for="categories" class="block text-sm font-medium text-gray-700 mb-2">{{ __('books.category') }}</label>
                         <select name="categories[]" multiple
-                            class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
+                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm min-h-[120px]">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"  {{ in_array($category->id, old('categories', [])) ? 'selected' : ''}}>
                                     {{$category->name }}
@@ -85,7 +85,7 @@
                             @endforeach
                         </select>
                         @error('categories')
-                            <span class="text-red-500 text-sm mt-2">{{$message}}</span>
+                            <span class="text-red-500 text-sm mt-2 block">{{$message}}</span>
                         @enderror
                     </div>
 
